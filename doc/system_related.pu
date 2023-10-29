@@ -1,0 +1,10 @@
+' システム関連図
+@startuml system
+actor :メンタ: as Menta
+actor :メンティ: as Mentee
+
+Menta -> (メンター募集システム) : 教える
+
+Mentee -down-> (メンター募集システム) : 教わる
+
+@enduml

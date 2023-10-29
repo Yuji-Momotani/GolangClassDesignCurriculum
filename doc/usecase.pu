@@ -1,0 +1,24 @@
+' ユースケース図
+@startuml usecase
+left to right direction
+actor メンティ as Mentee
+actor メンタ as Menta
+
+package Mentaサービス {
+  usecase "ユーザー登録" as UU
+  usecase "ユーザー更新" as UU2
+  usecase "プラン作成" as P1
+  usecase "プラン契約リクエスト" as P2
+  usecase "プラン契約承認" as P3
+}
+
+Menta --> UU
+Mentee --> UU
+Menta --> UU2
+Mentee --> UU2
+Mentee --> P1
+Menta --> P2
+Menta --> P3
+
+
+@enduml
