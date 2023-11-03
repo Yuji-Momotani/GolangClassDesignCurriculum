@@ -8,6 +8,8 @@ package ユーザー集約 {
         メールアドレス
         パスワード
         自己紹介
+        List<スキル>
+        List<経歴>
     }
     object スキル {
         ID
@@ -30,6 +32,8 @@ note left of ユーザー
     * メールアドレス：255文字以内
     * パスワード：12文字以上,英数字それぞれ最低1文字以上
     * 自己紹介：任意項目
+    * List<スキル>
+    * List<経歴>
 end note
 
 note bottom of スキル
@@ -88,7 +92,7 @@ note left of メンター募集
 end note
 メンター募集 "1" -down- "1..n" ユーザー
 
-package プラン作成集約 {
+package プラン集約 {
     object プラン {
         ID
         タイトル
@@ -124,20 +128,34 @@ note left of プラン
 end note
 メンター募集 "1" -down- "1" プラン
 
-package プラン契約集約 {
+package メンター募集集約 {
     object メンター募集に提案 {
         ID
         メンター募集ID
         ユーザーID
         提案内容
     }
-    object プラン契約リクエストを送信 {
+}
+note bottom of メンター募集に提案 
+    * 提案内容: 2000文字以内
+    * 提案できるのはスキルを5個以上持つユーザのみ
+end note
+
+package プラン契約リクエスト集約 {
+    object プラン契約リクエスト {
         ID
         プランID
         ユーザーID
         メッセージ
+        金額
     }
-    object プランへの契約を承認 {
+}
+note bottom of プラン契約リクエスト 
+    * メッセージ: 500文字以内
+end note
+
+package プラン承認集約 {
+    object プラン承認 {
         ID
         プランID
         ユーザーID
@@ -145,33 +163,15 @@ package プラン契約集約 {
     }
 }
 
-note bottom of メンター募集に提案 
-    * 提案内容: 2000文字以内
-    * 提案できるのはスキルを5個以上持つユーザのみ
-end note
-
-note bottom of プラン契約リクエストを送信 
-    * メッセージ: 500文字以内
-end note
-
-note left of プランへの契約を承認
+note left of プラン承認
     * メッセージ: 500文字以内
 end note
 
 メンター募集 "1" -left- "1..n" メンター募集に提案
-プラン "1" -left- "1..n" プラン契約リクエストを送信
-プラン契約リクエストを送信 "1" -left- "0..1" プランへの契約を承認
-
+プラン "1" -left- "1..n" プラン契約リクエスト
+プラン契約リクエスト "1" -left- "0..1" プラン承認
 
 @enduml
-
-' 名前 "1" left* "1" 候補者
-' ペンダント "1" down* "1" 候補者
-' キューブ "0..8" down* "1" ペンダント
-
-
-
-
 
 ' モデル図の書き方参考：https://tech.contracts.co.jp/entry/2020/10/16/150605
 ' 「集約」について参考：https://www.youtube.com/watch?v=Hn4EAXYBl8c
